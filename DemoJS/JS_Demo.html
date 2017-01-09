@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo JS</title>
+    <script type='text/javascript' src='C:\Users\VOTRUNG\Desktop\DemoJS\jquery.min.js'></script>
+
+</head>
+<style>
+    #contact label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+    }
+
+    #contact_submit {
+        padding-left: 100px;
+    }
+
+    #contact div {
+        margin-top: 1em;
+    }
+
+    textarea {
+        vertical-align: top;
+        height: 5em;
+    }
+
+    .error {
+        display: none;
+        margin-left: 10px;
+    }
+
+    .error_show {
+        color: blue;
+        margin-left: 10px;
+    }
+
+    input.invalid, textarea.invalid {
+        border: 2px solid red;
+    }
+
+    input.valid, textarea.valid {
+        border: 2px solid green;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    /*table {
+        width: 630px;
+    }
+
+    th {
+        height: 50px;
+    }
+
+    td {
+        height: 30px;
+    }*/
+</style>
+
+<script>
+    //cau 3
+    $(document).ready(function () {
+        $('#contact_name').on('input', function () {
+            var input = $(this);
+            var is_name = input.val();
+            if (is_name) { input.removeClass("invalid").addClass("valid"); }
+            else { input.removeClass("valid").addClass("invalid"); }
+        });
+
+
+        $('#contact_email').on('input', function () {
+            var input = $(this);
+            var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            var is_email = re.test(input.val());
+            if (is_email) { input.removeClass("invalid").addClass("valid"); }
+            else { input.removeClass("valid").addClass("invalid"); }
+        });
+
+
+        $('#contact_pass').on('input', function () {
+            var input = $(this);
+            var is_pass = input.val();
+            if (is_pass.length > 5) { input.removeClass("invalid").addClass("valid"); }
+            else { input.removeClass("valid").addClass("invalid"); }
+        });
+
+        $("#contact_submit button").click(function (event) {
+            var form_data = $("#contact").serializeArray();
+            var error_free = true;
+            for (var input in form_data) {
+                var element = $("#contact_" + form_data[input]['name']);
+                var valid = element.hasClass("valid");
+                var error_element = $("span", element.parent());
+                if (!valid) { error_element.removeClass("error").addClass("error_show"); error_free = false; }
+                else { error_element.removeClass("error_show").addClass("error"); }
+            }
+            if (!error_free) {
+                event.preventDefault();
+            }
+            else {
+                alert('Submit thành công !!!');
+            }
+        });
+        // câu 4
+        var table = document.getElementById("sampleTable"),
+		tbody = table.getElementsByTagName("tbody")[0];
+        for (var i = 0; i < 5; i++) {
+            var row = document.createElement("tr");
+            //var cell1 = document.createElement("td");
+            //var cell2 = document.createElement("td");
+            //cell1.innerHTML = i + "- 1";
+            //cell2.innerHTML = i + "- 2";
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            tbody.appendChild(row);
+        }
+    });
+    //cau 1
+    $('#five')
+    .css('background-color', '')
+    .css('background-color', 'red');
+    //cau 2
+    $("a").attr("href", "http://www.hutech.edu.vn")
+</script>
+<body>
+    <!--cau1-->
+    <h1>abc</h1>
+    <div>
+        <h1 id="four" style="background-color: blue ">div-1</h1>
+        <h1 id="four" style="background-color: red ">div-2</h1>
+    </div>
+    <h1 id="four" style="background-color: green"> xyz</h1>
+    <!--cau2-->
+    <a href="http://hutech.edu.vn">Trường ĐH Công Nghệ TP.HCM</a>
+    <form id="contact" method="post" action="">
+        <!-- Name -->
+        <div>
+            <label for="contact_name">Username:</label>
+            <input type="text" id="contact_name" name="name"></input>
+            <span class="error">Username is required</span>
+        </div>
+        <!--Password -->
+        <div>
+            <label for="contact_pass">Password:</label>
+            <input type="password" id="contact_pass" name="pass"></input>
+            <span class="error">Password must have minimum 6 characters</span>
+        </div>
+        <!-- Email -->
+        <div>
+            <label for="contact_email">Email Adress:</label>
+            <input type="email" id="contact_email" name="email"></input>
+            <span class="error">Must be a valid email</span>
+        </div>
+        <!-- Submit Button -->
+        <div id="contact_submit">
+            <button type="submit">Submit</button>
+        </div>
+        <br />
+       <!--cau4-->
+        <table id="Table">
+            <tr>
+                <td>
+                    <select>
+                        <option value="volvo">Email</option>
+                        <option value="saab">Phone</option>
+                        <option value="opel">Address</option>
+                    </select>
+                    <input type="text" name="fname">
+                </td>
+                <td>
+                    <label>Comments</label>
+                    <input type="text" name="fname">
+                </td>
+            </tr>
+        </table>
+        <p>
+            <input type="button" onclick="insert_Row()" value="Add Row">
+            <script>
+                function insert_Row() {
+                    var xTable = document.getElementById('Table');
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>New Insert</td><td> New Insert</td>';
+                    xTable.children[0].appendChild(tr); // appends to the tbody element
+                }
+            </script>
+            </table>
+</body>
+</html>
